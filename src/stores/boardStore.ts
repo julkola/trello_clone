@@ -26,12 +26,13 @@ export const useBoardStore = defineStore({
     moveTask(
       fromColumnIndex: number,
       toColumnIndex: number,
-      taskUnderIndex: number | null,
-      taskIndex: number
+      taskIndex: number,
+      taskUnderIndex?: number
     ) {
       const movingTask = this.board.columns[fromColumnIndex].tasks[taskIndex];
       this.board.columns[fromColumnIndex].tasks.splice(taskIndex, 1);
-      if (taskUnderIndex) this.board.columns[toColumnIndex].tasks.splice(taskUnderIndex, 0, movingTask);
+      if (taskUnderIndex)
+        this.board.columns[toColumnIndex].tasks.splice(taskUnderIndex, 0, movingTask);
       else this.board.columns[toColumnIndex].tasks.push(movingTask);
     },
     addColumn(name: string) {
