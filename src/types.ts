@@ -1,11 +1,11 @@
 interface newTask {
-    name: string,
+    title: string,
     description?: string,
     assignedUser?: string
 }
 interface Task {
     id: number,
-    name: string,
+    title: string,
     description?: string,
     assignedUser?: string
 }

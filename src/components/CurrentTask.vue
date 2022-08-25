@@ -4,7 +4,7 @@
     const boardStore = useBoardStore();
     const task = this.$route.params.task;
 
-    function updateTask (key: ("name" | "description" | "assignedUser") , value: string) {
+    function updateTask (key: ("title" | "description" | "assignedUser") , value: string) {
         boardStore.updateTask(task, key, value)
     }
 </script>

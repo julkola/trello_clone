@@ -14,32 +14,33 @@ export const useBoardStore = defineStore({
     board: getBoardFromLocalStorage() ?? defaultData,
   }),
   actions: {
-    addTask(tasks: Task[], name: string) {
+    addTask(tasks: Task[], title: string) {
       tasks.push({
         id: tasks[tasks.length - 1].id + 1,
-        name: name,
+        title: title,
       });
     },
-    updateTask(task: Task, key: "name" | "description" | "assignedUser", value: string) {
+    updateTask(task: Task, key: "title" | "description" | "assignedUser", value: string) {
       task[key] = value;
     },
     moveTask(
       fromColumnIndex: number,
       toColumnIndex: number,
-      taskAboveIndex: number,
+      taskUnderIndex: number | null,
       taskIndex: number
     ) {
       const movingTask = this.board.columns[fromColumnIndex].tasks[taskIndex];
       this.board.columns[fromColumnIndex].tasks.splice(taskIndex, 1);
-      this.board.columns[toColumnIndex].tasks.splice(taskAboveIndex, 0, movingTask);
+      if (taskUnderIndex) this.board.columns[toColumnIndex].tasks.splice(taskUnderIndex, 0, movingTask);
+      else this.board.columns[toColumnIndex].tasks.push(movingTask);
     },
     addColumn(name: string) {
       this.board.columns.push({ name: name, tasks: [] });
     },
-    moveColumn(columnAboveIndex: number, columnMovingIndex: number) {
+    moveColumn(columnUnderIndex: number, columnMovingIndex: number) {
       const movingColumn = this.board.columns[columnMovingIndex];
       this.board.columns.splice(columnMovingIndex, 1);
-      this.board.columns.splice(columnAboveIndex, 0, movingColumn);
+      this.board.columns.splice(columnUnderIndex, 0, movingColumn);
     },
   },
 });
