@@ -38,6 +38,14 @@ function dispatchDrop(event: DragEvent, toColumnIndex: number, taskUnderIndex?: 
       </Drag>
       </ColumnComponent>
     </Drag>
+    <div class="column">
+      <label for="add-column">
+        Add group
+      </label>
+      <input id="add-column" @keyup.enter="(e) => {
+        boardStore.addColumn((e.currentTarget as HTMLInputElement).value); (e.currentTarget as HTMLInputElement).value = '';
+      }">
+    </div>
   </main>
   <RouterView v-slot="{ Component }">
     <Transition name="slide-fade">

@@ -6,7 +6,7 @@ html {
 }
 .column {
     width: 250px;
-    margin: 0 20px;
+    margin: 10px;
     padding: 15px 20px;
     background-color: #222;
     border-radius: 5px;
@@ -43,6 +43,11 @@ input:focus {
 }
 input::placeholder {
     color: #cecece;
+}
+label {
+    color: #cecece;
+    margin-bottom: 20px;
+    display: block;
 }
 .title {
     display: block;
@@ -96,4 +101,7 @@ input::placeholder {
 .slide-fade-leave-to .current-task  {
     transform: translate(-50%, 60px);
     opacity: 0;
+}
+#add-column {
+    background-color: #1c1c1c;
 }
