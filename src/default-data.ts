@@ -19,6 +19,23 @@ export default {
             ]
         },
         {
+            name: `IDK`,
+            tasks: [
+                {
+                    id: 1234136,
+                    title: `hhhhwhatev...`,
+                    description: `List of things that needs to be done.`,
+                    userAssigned: null
+                },
+                {
+                    id: 12534,
+                    title: `name ds properly`,
+                    description: `seriously...`,
+                    userAssigned: null,
+                }
+            ]
+        },
+        {
             name: `in progress`,
             tasks: [
                 {

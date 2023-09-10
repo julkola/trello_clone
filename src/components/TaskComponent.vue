@@ -1,28 +1,19 @@
 <script setup lang="ts">
-    import { defineProps } from 'vue';
-    const props = defineProps(['task', 'taskIndex'])
+import { useRouter } from "vue-router";
+    const props = defineProps(['task', 'taskIndex', 'columnIndex'])
+    const emits = defineEmits(['dispatchDrop', 'upTask'])
+    const router = useRouter();
     function goToTask (id: number) {
-      console.log(id)
+      router.push(`/tasks/${id}`)
     }
 </script>
 
 <template>
-  <div class="task" @click="()=>goToTask(task.id)">
-    <p class="title">{{ task.title }}</p>
-    <p v-if="task.description" class="description">{{ task.description }}</p>
+  <div class="task" @click="()=>goToTask(task.id)"
+    @drop.stop="(event)=>emits('dispatchDrop', event, columnIndex, taskIndex)"
+    @dragover.prevent="()=>{}" @dragenter.prevent="()=>{}"
+  >
+    <span class="title">{{ task.title }}</span>
+    <span v-if="task.description" class="description">{{ task.description }}</span>
   </div>
 </template>
-
-<style scoped>
-  .title {
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .description {
-    font-size: 16px;
-    font-weight: 500;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-</style>

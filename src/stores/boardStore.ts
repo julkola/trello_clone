@@ -13,15 +13,25 @@ export const useBoardStore = defineStore({
   state: () => ({
     board: getBoardFromLocalStorage() ?? defaultData,
   }),
+  getters: {
+    grabTaskById: (state) => {
+      return (id: number) => {
+        for (const column of state.board.columns) {
+          const task = column.tasks.filter((task: Task) => { return task.id === id })
+          if (task.length > 0) {
+            return task[0]
+          }
+        }
+        return null
+      }
+    },
+  },
   actions: {
     addTask(tasks: Task[], title: string) {
       tasks.push({
         id: tasks[tasks.length - 1].id + 1,
         title: title,
       });
-    },
-    updateTask(task: Task, key: "title" | "description" | "assignedUser", value: string) {
-      task[key] = value;
     },
     moveTask(
       fromColumnIndex: number,
@@ -31,7 +41,7 @@ export const useBoardStore = defineStore({
     ) {
       const movingTask = this.board.columns[fromColumnIndex].tasks[taskIndex];
       this.board.columns[fromColumnIndex].tasks.splice(taskIndex, 1);
-      if (taskUnderIndex)
+      if (taskUnderIndex !== undefined)
         this.board.columns[toColumnIndex].tasks.splice(taskUnderIndex, 0, movingTask);
       else this.board.columns[toColumnIndex].tasks.push(movingTask);
     },
