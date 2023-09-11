@@ -26,16 +26,25 @@ function dispatchDrop(event: DragEvent, toColumnIndex: number, taskUnderIndex?: 
   <main>
     <Drag v-for="(column, columnIndex) in boardStore.board.columns" :key="column.name"
     :drag-data="[['fromColumnIndex', columnIndex]]">
-      <ColumnComponent :column="column" :column-index="columnIndex"
-      @dispatch-drop="(event, toColumnIndex, taskUnderIndex)=>dispatchDrop(event, toColumnIndex, taskUnderIndex)"
+      <ColumnComponent
+        :column="column"
+        :column-index="columnIndex"
+        @dispatch-drop="(event, toColumnIndex, taskUnderIndex)=>dispatchDrop(event, toColumnIndex, taskUnderIndex)"
       >
-      <Drag v-for="(task, taskIndex) in column.tasks" :key="task.id"
-      :drag-data="[['taskIndex', taskIndex], ['fromColumnIndex', columnIndex]]">
-        <TaskComponent 
-          :task="task" :task-index="taskIndex" :column-index="columnIndex"
-          @dispatch-drop="(event, toColumnIndex, taskUnderIndex)=>dispatchDrop(event, toColumnIndex, taskUnderIndex)"
-        />
-      </Drag>
+        <TransitionGroup name="task">
+          <Drag
+            v-for="(task, taskIndex) in column.tasks"
+            :key="task.id"
+            :drag-data="[['taskIndex', taskIndex], ['fromColumnIndex', columnIndex]]"
+          >
+            <TaskComponent 
+              :task="task"
+              :task-index="taskIndex"
+              :column-index="columnIndex"
+              @dispatch-drop="(event, toColumnIndex, taskUnderIndex)=>dispatchDrop(event, toColumnIndex, taskUnderIndex)"
+            />
+          </Drag>
+        </TransitionGroup>
       </ColumnComponent>
     </Drag>
     <div class="column">
